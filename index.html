@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MeltedDev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f2f0eb;
+    --mid: #888;
+  }
+
+  html, body {
+    min-height: 100%;
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Space Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 20px 80px;
+  }
+
+  /* DRIP BACKGROUND */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* BANNER */
+  .banner-wrap {
+    width: 100%;
+    margin-bottom: 36px;
+    animation: fade-up 0.5s 0.05s ease both;
+  }
+
+  .banner-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .tagline {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: -20px;
+    margin-bottom: 44px;
+    text-align: center;
+    animation: fade-up 0.5s 0.15s ease both;
+  }
+
+  /* LINKS */
+  .links {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 15px 20px;
+    background: transparent;
+    border: 1.5px solid rgba(242,240,235,0.15);
+    border-radius: 4px;
+    color: var(--white);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: background 0.15s, border-color 0.15s, transform 0.12s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--white);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+  }
+
+  .link:hover::before { transform: scaleX(1); }
+  .link:hover { color: var(--black); border-color: var(--white); }
+  .link:hover .link-icon svg { fill: var(--black); stroke: var(--black); }
+  .link:active { transform: scale(0.98); }
+
+  .link-icon, .link-label, .link-arrow {
+    position: relative;
+    z-index: 1;
+  }
+
+  .link-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .link-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: var(--white);
+    transition: fill 0.15s, stroke 0.15s;
+  }
+
+  .link-label { flex: 1; }
+
+  .link-arrow {
+    font-size: 0.9rem;
+    opacity: 0.4;
+    transition: opacity 0.15s, transform 0.15s;
+  }
+  .link:hover .link-arrow { opacity: 1; transform: translateX(3px); }
+
+  /* Section label */
+  .section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    align-self: flex-start;
+    margin-top: 24px;
+    margin-bottom: 4px;
+    padding-left: 2px;
+  }
+
+  /* Stagger animations */
+  .link:nth-child(1)  { animation: fade-up 0.4s 0.25s ease both; }
+  .link:nth-child(2)  { animation: fade-up 0.4s 0.31s ease both; }
+  .link:nth-child(3)  { animation: fade-up 0.4s 0.37s ease both; }
+  .link:nth-child(4)  { animation: fade-up 0.4s 0.43s ease both; }
+  .link:nth-child(5)  { animation: fade-up 0.4s 0.49s ease both; }
+  .link:nth-child(6)  { animation: fade-up 0.4s 0.55s ease both; }
+  .link:nth-child(7)  { animation: fade-up 0.4s 0.61s ease both; }
+  .link:nth-child(8)  { animation: fade-up 0.4s 0.67s ease both; }
+
+  /* Divider */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: 20px 0 16px;
+    animation: fade-up 0.4s 0.5s ease both;
+  }
+
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="banner-wrap">
+    <img src="TransparentBanner.png" alt="MELTED">
+  </div>
+
+  <p class="tagline">@MeltedDev</p>
+
+  <div class="links" id="stream">
+
+    <div class="section-label">Stream</div>
+
+    <a class="link" href="https://twitch.tv/MeltedDev" target="_blank" rel="noopener">
+      <span class="link-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+      </span>
+      <span class="link-label">Twitch</span>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a class="link" href="https://tiktok.com/@MeltedDev" target="_blank" rel="noopener">
+      <span class="link-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+      </span>
+      <span class="link-label">TikTok</span>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a class="link" href="https://youtube.com/@MeltedDev" target="_blank" rel="noopener">
+      <span class="link-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </span>
+      <span class="link-label">YouTube</span>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <div class="section-label">Community</div>
+
+    <a class="link" href="https://discord.gg/MeltedDev" target="_blank" rel="noopener">
+      <span class="link-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.001.022.015.043.031.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+      </span>
+      <span class="link-label">Discord</span>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <div class="section-label">Socials</div>
+
+    <a class="link" href="https://twitter.com/MeltedDev" target="_blank" rel="noopener">
+      <span class="link-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.741l7.73-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </span>
+      <span class="link-label">Twitter / X</span>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a class="link" href="https://instagram.com/MeltedDev" target="_blank" rel="noopener">
+      <span class="link-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162S8.597 18.163 12 18.163s6.162-2.759 6.162-6.162S15.403 5.838 12 5.838zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </span>
+      <span class="link-label">Instagram</span>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <a class="link" href="https://bsky.app/profile/MeltedDev.bsky.social" target="_blank" rel="noopener">
+      <span class="link-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.136-.02.275-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
+      </span>
+      <span class="link-label">Bluesky</span>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <div class="section-label">Games</div>
+
+    <a class="link" href="https://meltedgames.itch.io" target="_blank" rel="noopener">
+      <span class="link-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3.13 1.338C2.08 1.96.02 4.328 0 4.95v.8c0 1.009.94 1.905 1.8 1.905.867 0 1.6-.738 1.6-1.605 0 .867.717 1.605 1.585 1.605.867 0 1.568-.738 1.568-1.605 0 .867.752 1.605 1.619 1.605h.028c.867 0 1.619-.738 1.619-1.605 0 .867.701 1.605 1.568 1.605.868 0 1.586-.738 1.586-1.605 0 .867.732 1.605 1.6 1.605.866 0 1.8-.896 1.8-1.906v-.8c-.02-.62-2.08-2.988-3.13-3.61C13.82.72 3.13 1.338 3.13 1.338zm5.52 7.4c-.61.002-1.22.07-1.72.217-.9.27-5.45 2.137-5.45 2.137v8.93c0 1.385 1.645 2.454 3.03 2.454H19.5c1.385 0 3.03-1.07 3.03-2.455v-8.93s-4.55-1.866-5.45-2.137c-.5-.148-1.11-.215-1.72-.217-.45.003-.9.06-1.25.195-.51.195-1.04.598-2.11.598-1.07 0-1.6-.403-2.11-.598-.35-.135-.8-.192-1.24-.195zm.1 3.7h6.5c.5 0 1.03.5 1.03 1v3.5c0 .5-.53.5-1.03.5h-6.5c-.5 0-1.02 0-1.02-.5v-3.5c0-.5.52-1 1.02-1z"/></svg>
+      </span>
+      <span class="link-label">Itch.io</span>
+      <span class="link-arrow">→</span>
+    </a>
+
+  </div>
+
+
+</div>
+</body>
+</html>
