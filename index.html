@@ -4,38 +4,51 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MeltedDev</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Space+Mono:wght@400;700&family=DM+Sans:wght@400&display=swap" rel="stylesheet">
 <style>
+  @font-face {
+    font-family: 'Kaph';
+    src: url('Kaph-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  @font-face {
+    font-family: 'Kaph';
+    src: url('Kaph-Italic.otf') format('opentype');
+    font-weight: normal;
+    font-style: italic;
+  }
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --black: #0a0a0a;
-    --white: #f2f0eb;
-    --mid: #888;
+    --bg: #84ADC5;
+    --cream: #fdf6e8;
+    --cream-dark: #f0e4c8;
+    --ink: #1a1a1a;
+    --purple: #9b7fe0;
+    --gold: #d4b86a;
   }
 
   html, body {
     min-height: 100%;
-    background: var(--black);
-    color: var(--white);
-    font-family: 'Space Mono', monospace;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Kaph', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 60px 20px 80px;
   }
 
-  /* BACKGROUND */
+  /* SOFT CLOUDS BACKGROUND */
   body::before {
     content: '';
     position: fixed;
-    top: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(ellipse at 50% 30%, rgba(255,255,255,0.04) 0%, transparent 70%);
+    inset: 0;
+    background:
+      radial-gradient(ellipse 500px 200px at 15% 10%, rgba(255,255,255,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 600px 250px at 85% 25%, rgba(255,255,255,0.3) 0%, transparent 70%),
+      radial-gradient(ellipse 400px 180px at 50% 90%, rgba(255,255,255,0.2) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
   }
@@ -54,24 +67,28 @@
   /* BANNER */
   .banner-wrap {
     width: 100%;
-    margin-bottom: 36px;
-    animation: fade-up 0.5s 0.05s ease both;
+    margin-bottom: 30px;
+    animation: pop-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
 
   .banner-wrap img {
     width: 100%;
     height: auto;
     display: block;
+    filter: drop-shadow(0 6px 0 rgba(0,0,0,0.12));
   }
 
   .tagline {
-    font-size: 0.78rem;
-    letter-spacing: 0.12em;
-    text-transform: none;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--mid);
-    margin-top: -20px;
-    margin-bottom: 44px;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    font-family: 'Kaph', sans-serif;
+    font-style: italic;
+    color: var(--ink);
+    -webkit-text-stroke: 5px white;
+    paint-order: stroke fill;
+    opacity: 0.85;
+    margin-top: -16px;
+    margin-bottom: 40px;
     text-align: center;
     animation: fade-up 0.5s 0.15s ease both;
   }
@@ -81,7 +98,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 11px;
+    gap: 13px;
   }
 
   .link {
@@ -89,38 +106,47 @@
     align-items: center;
     gap: 14px;
     width: 100%;
-    padding: 15px 20px;
-    background: transparent;
-    border: 1.5px solid rgba(242,240,235,0.15);
-    border-radius: 4px;
-    color: var(--white);
+    padding: 17px 24px;
+    background: var(--cream);
+    border: 2.5px solid var(--ink);
+    border-radius: 999px;
+    color: var(--ink);
     text-decoration: none;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    transition: background 0.15s, border-color 0.15s, transform 0.12s;
+    font-family: 'Kaph', sans-serif;
+    font-size: 1rem;
+    font-weight: normal;
+    letter-spacing: 0.01em;
+    box-shadow: 0 4px 0 var(--ink);
+    transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.15s ease, background 0.15s ease;
     cursor: pointer;
     position: relative;
-    overflow: hidden;
   }
 
-  .link::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--white);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 0;
+  .link:hover {
+    background: var(--cream-dark);
   }
 
-  .link:hover::before { transform: scaleX(1); }
-  .link:hover { color: var(--black); border-color: var(--white); }
-  .link:hover .link-icon svg { fill: var(--black); stroke: var(--black); }
-  .link:active { transform: scale(0.98); }
+  .link:active {
+    transform: scale(0.97);
+    box-shadow: 1px 1px 0 var(--ink);
+  }
+
+  /* FEATURED LINKS */
+  .link.featured {
+    border-width: 3px;
+    font-size: 1.05rem;
+    padding: 19px 24px;
+  }
+
+  .link.featured-purple {
+    background: var(--purple);
+    color: var(--ink);
+  }
+
+  .link.featured-gold {
+    background: var(--gold);
+    color: var(--ink);
+  }
 
   .link-icon, .link-label, .link-arrow {
     position: relative;
@@ -128,8 +154,8 @@
   }
 
   .link-icon {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
@@ -137,46 +163,42 @@
   }
 
   .link-icon svg {
-    width: 18px;
-    height: 18px;
-    fill: var(--white);
-    transition: fill 0.15s, stroke 0.15s;
+    width: 20px;
+    height: 20px;
+    fill: var(--ink);
   }
 
   .link-label { flex: 1; }
 
   .link-arrow {
-    font-size: 0.9rem;
-    opacity: 0.4;
+    font-size: 1rem;
+    opacity: 0.5;
     transition: opacity 0.15s, transform 0.15s;
   }
   .link:hover .link-arrow { opacity: 1; transform: translateX(3px); }
 
   /* Section label */
   .section-label {
-    font-size: 0.6rem;
-    font-family: 'DM Sans', sans-serif;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.25);
+    font-size: 0.75rem;
+    font-family: 'Kaph', sans-serif;
+    font-style: italic;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    opacity: 0.55;
     align-self: flex-start;
-    margin-top: 24px;
-    margin-bottom: 4px;
-    padding-left: 2px;
+    margin-top: 22px;
+    margin-bottom: 2px;
+    padding-left: 10px;
   }
 
   .link { animation: fade-up 0.4s ease both; }
 
-  /* Divider */
-  .divider {
-    width: 100%;
-    height: 1px;
-    background: rgba(255,255,255,0.08);
-    margin: 20px 0 16px;
-    animation: fade-up 0.4s 0.5s ease both;
+  @keyframes pop-in {
+    from { opacity: 0; transform: scale(0.8) rotate(-3deg); }
+    to   { opacity: 1; transform: scale(1) rotate(0deg); }
   }
 
-@keyframes fade-up {
+  @keyframes fade-up {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
   }
@@ -189,19 +211,27 @@
     <img src="TransparentBanner.png" alt="MELTED">
   </div>
 
-  <p class="tagline">@MeltedDev</p>
+  <p class="tagline">@<span style="font-size:1.1em">M</span><span style="font-size:0.9em">elted</span><span style="font-size:1.1em">D</span><span style="font-size:0.9em">ev</span></p>
 
   <div class="links" id="stream">
 
-    <div class="section-label">Watch</div>
-
-    <a class="link" href="https://twitch.tv/MeltedDev" target="_blank" rel="noopener" style="animation-delay:0.25s">
+    <a class="link featured featured-purple" href="https://twitch.tv/MeltedDev" target="_blank" rel="noopener" style="animation-delay:0.15s">
       <span class="link-icon">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
       </span>
-      <span class="link-label">Twitch</span>
+      <span class="link-label">Watch Live on Twitch</span>
       <span class="link-arrow">→</span>
     </a>
+
+    <a class="link featured featured-gold" href="https://meltedgames.itch.io/avatar" target="_blank" rel="noopener" style="animation-delay:0.2s">
+      <span class="link-icon">
+        <img src="avatar.png" alt="" style="width:20px;height:20px;object-fit:contain;">
+      </span>
+      <span class="link-label">Stream Avatar Editor</span>
+      <span class="link-arrow">→</span>
+    </a>
+
+    <div class="section-label">Watch</div>
 
     <a class="link" href="https://youtube.com/@MeltedDev" target="_blank" rel="noopener" style="animation-delay:0.31s">
       <span class="link-icon">
@@ -219,9 +249,9 @@
       <span class="link-arrow">→</span>
     </a>
 
-    <div class="section-label">Chat</div>
+    <div class="section-label">Talk</div>
 
-    <a class="link" href="https://discord.gg/dmbAKGZAnF" target="_blank" rel="noopener" style="animation-delay:0.43s">
+    <a class="link" href="https://discord.gg/MeltedDev" target="_blank" rel="noopener" style="animation-delay:0.43s">
       <span class="link-icon">
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.001.022.015.043.031.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
       </span>
@@ -263,17 +293,9 @@
       <span class="link-arrow">→</span>
     </a>
 
-    <a class="link" href="https://meltedgames.itch.io/avatar" target="_blank" rel="noopener" style="animation-delay:0.73s">
-      <span class="link-icon">
-        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2a5 5 0 1 0 0 10A5 5 0 0 0 12 2zm0 12c-5.33 0-8 2.67-8 4v2h16v-2c0-1.33-2.67-4-8-4z"/></svg>
-      </span>
-      <span class="link-label">Stream Avatar Editor</span>
-      <span class="link-arrow">→</span>
-    </a>
-
   </div>
 
-
 </div>
+
 </body>
 </html>
